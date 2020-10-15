@@ -61,7 +61,11 @@ class TestDLList(unittest.TestCase):
         e3 = l.append(3)
         e4 = l.append("banana")
 
+        self.assertEqual(l.back(), e4)
+
         self.checkpointers(l, [e1, e2, e3, e4])
+
+        self.assertEqual(l.back(), e4)
 
         l.remove(e2)
         self.checkpointers(l, [e1, e3, e4])

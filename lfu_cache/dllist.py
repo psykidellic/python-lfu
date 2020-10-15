@@ -150,7 +150,7 @@ class DLList(object):
         return self.root.next
 
 
-    def tail(self) -> Optional[Element]:
+    def back(self) -> Optional[Element]:
         """return last element of list or None"""
         if not self.len:
             return None
