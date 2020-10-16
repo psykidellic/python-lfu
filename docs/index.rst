@@ -3,18 +3,49 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to python-lfu's documentation!
-======================================
+===========
+Python-LFU
+===========
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+.. currentmodule:: lfu_cache
+
+Simplest usage
+
+.. code-block:: python
+
+    from lfu_cache import LFUCache
+    cache = LFUCache(2)
+    cache.put(1, 1)
+    cache.put(2, 2)
+    cache.get(1)
+    cache.put(3, 3) # will evict 2
+    cache.get(2) # will return -1
+
+Algorithm can be read at this `research paper <http://dhruvbird.com/lfu.pdf>`_.
+The implementation is exactly same where the cache object wraps FrequencyList
+linked list whose elements are FrequencyItem. FrequencyItem has an attribute
+frequency. FrequencyItem then wraps a NodeList double linked list with NodeItem
+as elements of it. NodeItem wraps up the actual key/value provided by
+application.
 
 
+API Documentation
+=================
 
-Indices and tables
-==================
+This documentation is automatically generated from Python-LFU source code.
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. module:: lfu_cache
+
+.. autoclass:: LFUCache
+   :members: get, put
+
+
+.. autoclass:: Element
+   :members: nextelement, prevelement
+
+
+.. autoclass:: DLList
+   :members:
+
+
+.. autoexception:: OtherListElement

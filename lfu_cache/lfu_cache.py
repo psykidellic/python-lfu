@@ -107,8 +107,7 @@ class LFUCache(object):
 
     def put(self, key: Any, value: Any):
         """
-        Puts an object to the cache and if limit is reached, evicts the
-        least frequently used item that is from the frequency item nodelist
+        Puts an object to the cache
         """
         # We dont even attempt zero limit cache
         if not self.limit:
