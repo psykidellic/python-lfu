@@ -6,13 +6,10 @@ import re
 import os
 import codecs
 
-name = 'python-lfu'
-package = 'lfu_cache'
-description = 'A Python LFU cache implementation with O(1) eviction scheme'
-url = 'https://github.com/psykidellic/python-lfu'
-author = 'Ritesh Nadhani'
-author_email = 'riteshn@gmail.com'
-license = 'Unilicense'
+about = {}
+with open('lfu_cache/__about__.py') as f:
+    exec(f.read(), about)
+
 install_requires = []
 extras_require = {}
 
@@ -29,27 +26,17 @@ classifiers = [
 ]
 
 
-def get_version(package):
-    """
-    Return package version as listed in `__version__` in `init.py`.
-    """
-    init_py = codecs.open(os.path.join(
-        package, '__about__.py'), encoding='utf-8').read()
-    return re.search(
-        "^__version__ = ['\"]([^'\"]+)['\"]", init_py, re.MULTILINE).group(1)
-
-
 EXCLUDE_FROM_PACKAGES = []
 
 setup(
-    name=name,
-    version=get_version(package),
-    url=url,
-    license=license,
-    description=description,
-    long_description=description,
-    author=author,
-    author_email=author_email,
+    name=about['__title__'],
+    version=about['__version__'],
+    url=about['__url__'],
+    license=about['__license__'],
+    description=about['__description__'],
+    long_description=about['__description__'],
+    author=about['__author__'],
+    author_email=about['__author_email__'],
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     install_requires=install_requires,
     extras_require=extras_require,
