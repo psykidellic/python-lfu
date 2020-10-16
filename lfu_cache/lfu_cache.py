@@ -20,32 +20,32 @@ class _FrequencyItem(object):
 
     def __init__(self, frequency: int):
         #: Frequency of this item
-        self.frequency : int = frequency
+        self.frequency: int = frequency
         #: Linked list of nodelist. Items for this list will be NodeItem
-        self.nodelist : DLList = DLList()
+        self.nodelist: DLList = DLList()
         #: Parent element to which this item belongs
         #: we use this to get the next frequency item
-        self.element : Optional[Element] = None
+        self.element: Optional[Element] = None
 
 
 class LFUCache(object):
     """Object implents an O(1) algorithm for implementing the LFU
-    cache eviction scheme. This is based on paper at: http://dhruvbird.com/lfu.pdf
+    cache eviction scheme. This is based on paper at:
+    http://dhruvbird.com/lfu.pdf
 
     See: https://en.wikipedia.org/wiki/Least_frequently_used"""
 
     def __init__(self, limit: int):
         #: Limit of cache before an element is evicted
-        self.limit : int = limit
-        #: We use a dict to store the data. Value is element from the corresponding
-        #: frequency list item
-        self.cache : Dict[Any, Element] = {}
+        self.limit: int = limit
+        #: We use a dict to store the data. Value is element from the
+        #: corresponding frequency list item
+        self.cache: Dict[Any, Element] = {}
         #: Frequency list
-        self.freqlist : DLList = DLList()
+        self.freqlist: DLList = DLList()
 
         if self.limit < 0:
             self.limit = 0
-
 
     def _movetonextfrequency(self, element: Element) -> Element:
         """Element is the linked list wrapper of Node item
@@ -72,12 +72,15 @@ class LFUCache(object):
         # in the first case 3 is present after 1 but we need it to be 2
         if (
             nextfrequencyitem and
-            cast(_FrequencyItem, nextfrequencyitem.value).frequency == currentfrequency+1
-            ):
+            cast(
+                _FrequencyItem,
+                nextfrequencyitem.value).frequency == currentfrequency + 1
+        ):
             nextfrequency = cast(_FrequencyItem, nextfrequencyitem.value)
         else:
-            nextfrequency = _FrequencyItem(currentfrequency+1)
-            newfrequencyitemelement = self.freqlist.insertafter(nextfrequency, nodefreqitemelement)
+            nextfrequency = _FrequencyItem(currentfrequency + 1)
+            newfrequencyitemelement = self.freqlist.insertafter(
+                nextfrequency, nodefreqitemelement)
             nextfrequency.element = newfrequencyitemelement
 
         nodeitem.freqitem.nodelist.remove(element)
@@ -86,10 +89,10 @@ class LFUCache(object):
         if not len(nodeitem.freqitem.nodelist):
             self.freqlist.remove(nodeitem.freqitem.element)
 
-        newelement = nextfrequency.nodelist.append(_NodeItem(nodeitem.key, nodeitem.value, nextfrequency))
+        newelement = nextfrequency.nodelist.append(
+            _NodeItem(nodeitem.key, nodeitem.value, nextfrequency))
 
         return newelement
-
 
     def _evictlfu(self):
         """Removes the first element from frequency list and cache"""
@@ -102,10 +105,11 @@ class LFUCache(object):
 
             del self.cache[nodeitem.key]
 
-
     def put(self, key: Any, value: Any):
-        """Puts an object to the cache and if limit is reached, evicts the least
-        frequently used item that is from the frequency item nodelist"""
+        """
+        Puts an object to the cache and if limit is reached, evicts the
+        least frequently used item that is from the frequency item nodelist
+        """
         # We dont even attempt zero limit cache
         if not self.limit:
             return
@@ -138,7 +142,6 @@ class LFUCache(object):
 
         self.cache[key] = newelement
 
-
     def get(self, key) -> Any:
         """Gets value by key. -1 if not present"""
         try:
@@ -152,4 +155,3 @@ class LFUCache(object):
         self.cache[key] = newelement
 
         return value
-

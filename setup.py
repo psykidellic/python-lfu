@@ -33,8 +33,11 @@ def get_version(package):
     """
     Return package version as listed in `__version__` in `init.py`.
     """
-    init_py = codecs.open(os.path.join(package, '__about__.py'), encoding='utf-8').read()
-    return re.search("^__version__ = ['\"]([^'\"]+)['\"]", init_py, re.MULTILINE).group(1)
+    init_py = codecs.open(os.path.join(
+        package, '__about__.py'), encoding='utf-8').read()
+    return re.search(
+        "^__version__ = ['\"]([^'\"]+)['\"]", init_py, re.MULTILINE).group(1)
+
 
 EXCLUDE_FROM_PACKAGES = []
 

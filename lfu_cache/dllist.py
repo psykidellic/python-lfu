@@ -2,6 +2,7 @@ from typing import Any, Optional, Union, Iterable
 
 from .exceptions import OtherListElement
 
+
 class Element(object):
 
     def __init__(self, value: Any, dllist: 'DLList'):
@@ -20,19 +21,17 @@ class Element(object):
         #: Reference to linked list the element is part of
         self.dllist: 'DLList' = dllist
 
-
     def nextelement(self) -> Optional['Element']:
         """Return the next list element or None"""
-        p: Optional[Element]  = self.next
+        p: Optional[Element] = self.next
         if p and p != p.dllist.root:
             return p
 
         return None
 
-
     def prevelement(self) -> Optional['Element']:
         """Return the next list element or None"""
-        p: Optional[Element]  = self.prev
+        p: Optional[Element] = self.prev
         if p and p != p.dllist.root:
             return p
 
@@ -40,16 +39,17 @@ class Element(object):
 
 
 class DLList(object):
-    """Object implementing a double linked list. Python verison of Golang list
-    container. To simplify implementation, internally the list is implemented as
-    a ring such that DLLlist.root is both next element of last and previous element
-    of first"""
+    """
+    Object implementing a double linked list. Python verison of Golang list
+    container. To simplify implementation, internally the list is implemented
+    as a ring such that DLLlist.root is both next element of last and previous
+    element of first
+    """
 
     def __init__(self):
         #: Sentinel node of the list.
-        self.root : Element = self._init()
-        self.len : int = 0
-
+        self.root: Element = self._init()
+        self.len: int = 0
 
     def _init(self) -> Element:
         """Creates an element for sentinel node"""
@@ -58,14 +58,11 @@ class DLList(object):
         e.prev = e
         return e
 
-
     def __len__(self):
         return self.len
 
-
     def __iter__(self) -> Iterable[Element]:
         return self._iter(True)
-
 
     def _iter(self, value: bool) -> Iterable[Union[Element, Any]]:
         """Helper wrapper for both iter and iternodes"""
@@ -76,7 +73,6 @@ class DLList(object):
             else:
                 yield front
             front = front.nextelement()
-
 
     def _insert(self, e: Element, at: Element) -> Element:
         """Inserts e after at and increase len"""
@@ -96,11 +92,9 @@ class DLList(object):
 
         return e
 
-
     def _insertValue(self, value: Any, at: Element) -> Element:
         """Convenience wrapper for insert(Element(value), at)"""
         return self._insert(Element(value, self), at)
-
 
     def _remove(self, e: Element) -> Element:
         """Removes e from its list, decrements l.len, and return e"""
@@ -114,7 +108,6 @@ class DLList(object):
 
         self.len = self.len - 1
         return e
-
 
     def _move(self, e: Element, at: Element) -> Element:
         """Moves e to next to at and return e"""
@@ -135,12 +128,10 @@ class DLList(object):
             e.next.prev = e
         return e
 
-
     def reinit(self) -> None:
         """Reinits list"""
         self.root = self._init()
         self.len = 0
-
 
     def front(self) -> Optional[Element]:
         """return first element of list or None"""
@@ -149,14 +140,12 @@ class DLList(object):
 
         return self.root.next
 
-
     def back(self) -> Optional[Element]:
         """return last element of list or None"""
         if not self.len:
             return None
 
         return self.root.prev
-
 
     def appendleft(self, value: Any) -> Element:
         """Inserts a new element with value v at front of list. return Element
@@ -166,7 +155,6 @@ class DLList(object):
         :return: New element with value value
         """
         return self._insertValue(value, self.root)
-
 
     def append(self, value: Any) -> Element:
         """Inserts a new element with value v at tail of list. return Element
@@ -178,14 +166,12 @@ class DLList(object):
             return self._insertValue(value, self.root.prev)
         raise RuntimeError("Should not reach here")
 
-
     def remove(self, e: Element) -> Any:
         """Remove element e and return value associated with it"""
         if e.dllist == self:
             self._remove(e)
 
         return e.value
-
 
     def insertbefore(self, value: Any, mark: Element) -> Element:
         """Inserts a new element e before mark and return e
@@ -197,7 +183,6 @@ class DLList(object):
             return self._insertValue(value, mark.prev)
         raise RuntimeError("Should not reach here")
 
-
     def insertafter(self, value: Any, mark: Element) -> Element:
         """Inserts a new element e after mark and return e
 
@@ -205,7 +190,6 @@ class DLList(object):
         :param mark: new element is added after mark
         """
         return self._insertValue(value, mark)
-
 
     def movetofront(self, e: Element) -> None:
         """Moves element e to front of list
@@ -215,7 +199,6 @@ class DLList(object):
             return
 
         self._move(e, self.root)
-
 
     def movetoback(self, e: Element) -> None:
         """Moves element e to tail of list
@@ -229,7 +212,6 @@ class DLList(object):
             return
 
         raise RuntimeError("Should not reach here")
-
 
     def movebefore(self, e: Element, mark: Element) -> None:
         """Moves element e before mark
@@ -245,7 +227,6 @@ class DLList(object):
 
         raise RuntimeError("Should not reach here")
 
-
     def moveafter(self, e: Element, mark: Element) -> None:
         """Move element e after mark
 
@@ -255,7 +236,6 @@ class DLList(object):
             return
 
         self._move(e, mark)
-
 
     def iternodes(self) -> Iterable[Element]:
         return self._iter(False)
