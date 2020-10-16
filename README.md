@@ -29,8 +29,7 @@ Example:
 >>> cache.get(1)
 1
 >>> cache.put(3, 3) # will evict 2
->>> cache.get(2)
--1
+>>> cache.get(2) # Raises KeyError
 >>>
 ```
 

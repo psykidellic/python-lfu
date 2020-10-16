@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, cast
+from typing import Dict, Any, Optional, cast, Union
 from .dllist import DLList, Element
 
 
@@ -141,14 +141,11 @@ class LFUCache(object):
 
         self.cache[key] = newelement
 
-    def get(self, key) -> Any:
-        """Gets value by key. -1 if not present"""
-        try:
-            element = self.cache[key]
-            nodeitem = cast(_NodeItem, element.value)
-            value = nodeitem.value
-        except KeyError as e:
-            return -1
+    def get(self, key) -> Union[KeyError, Any]:
+        """Gets value by key. Raises KeyError, if not found"""
+        element = self.cache[key]  # this will just return KeyError if not ther
+        nodeitem = cast(_NodeItem, element.value)
+        value = nodeitem.value
 
         newelement = self._movetonextfrequency(element)
         self.cache[key] = newelement
