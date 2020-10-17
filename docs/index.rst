@@ -19,7 +19,7 @@ Simplest usage
     cache.put(2, 2)
     cache.get(1)
     cache.put(3, 3) # will evict 2
-    cache.get(2) # will return -1
+    cache.get(2) # raise KeyError
 
 Algorithm can be read at this `research paper <http://dhruvbird.com/lfu.pdf>`_.
 The implementation is exactly same where the cache object wraps FrequencyList
