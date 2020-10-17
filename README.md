@@ -1,5 +1,9 @@
 # Python-LFU
 
+[![Coverage Status](https://coveralls.io/repos/github/psykidellic/python-lfu/badge.svg?branch=main)](https://coveralls.io/github/psykidellic/python-lfu?branch=main)
+![Tests](https://github.com/psykidellic/python-lfu/workflows/Tests/badge.svg?branch=main)
+[![PyPI version](https://badge.fury.io/py/python-lfu.svg)](https://badge.fury.io/py/python-lfu)
+
 Pure Python library implementing LFU cache system with O(1) cache eviction
 scheme. The algorithm is based on the following [research paper](http://dhruvbird.com/lfu.pdf).
 

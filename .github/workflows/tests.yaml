@@ -27,3 +27,7 @@ jobs:
         run: python -m pip install -U pip setuptools wheel
       - run: pip install tox coveralls
       - run: tox -e ${{ matrix.tox }}
+      - run: coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        if: ${{ matrix.tox != 'style' }}
