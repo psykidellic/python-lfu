@@ -35,7 +35,7 @@ Example:
 
 Key, value can be of `Any` type.
 
-Complete documentation for Python-LFU is available on ReadTheDocs.
+Complete documentation for Python-LFU is available on [ReadTheDocs](https://python-lfu.readthedocs.io/en/latest/)
 
 ## Development
 
